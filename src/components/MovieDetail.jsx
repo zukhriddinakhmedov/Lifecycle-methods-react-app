@@ -3,6 +3,8 @@ import { Card } from 'react-bootstrap'
 
 class MovieDetail extends Component {
 
+    timer = null
+
     state = {
         //here we can store the data coming from the fetch
         MovieDetails: null
@@ -26,17 +28,25 @@ class MovieDetail extends Component {
         }
     }
 
-    async componentDidMount(previousProps, previousState) {
-        //beahves in the same exact way as render
-        //fires itself again every time there is a change in the state or in the props of this component
-        //here we can do the fetch
+    componentDidMount() {
         this.fetchMovieData()
-
+        this.timer = setInterval(() => {
+            console.log('time is flying')
+        }, 1000)
     }
 
-    componentDidUpdate() {
+
+
+    componentDidUpdate(previousProps, previousState) {
         console.log('componmentDidUpdate happened')
-        this.fetchMovieData()
+        if (previousProps.selectedMovie !== this.props.selectedMovie) {
+            this.fetchMovieData()
+        }
+    }
+
+    componentWillUnmount() {
+        console.log('deleted!')
+        clearInterval(this.timer)
     }
 
     render() {
@@ -46,14 +56,15 @@ class MovieDetail extends Component {
                 {
                     this.state.movieDetails && (
 
-                        //I am entering
+                        //I am entering this portion of the JSX just when the fetch is completed
+                        //so just when movieDetails in the state is not full anymore
                         <div>
                             <Card style={{ width: '18rem' }}>
                                 <Card.Img variant="top" src={this.state.movieDetails.Poster} />
                                 <Card.Body>
                                     <Card.Title>{this.state.movieDetails.Year}</Card.Title>
                                     <Card.Text>
-                                        {this.state.movieDetails.imbID}
+                                        {this.state.movieDetails.imdbID}
                                     </Card.Text>
                                 </Card.Body>
                             </Card>

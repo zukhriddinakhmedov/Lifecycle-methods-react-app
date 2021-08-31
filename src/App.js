@@ -1,14 +1,25 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
 import { Component } from 'react'
-import { Container, Row, Col, Form } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import MovieDetail from './components/MovieDetail';
 
+//PLANS FOR TODAY:
+//// the goal for today is to work with lifecycle methods!
+// all the lifecycle methods in a React Components just work in a Class
 
+// constructor
+// componentDidMount
+// render
+// componentDidUpdate
+// componentWillUnmount
+// all of these just work on a Class Component
 
 class App extends Component {
+
   state = {
-    movieTitle: 'Batman Begins'
+    movieTitle: 'Batman Begins',
+    showMoive: true,
   }
 
   render() {
@@ -39,6 +50,7 @@ class App extends Component {
               </Form>
             </Col>
           </Row>
+          <Button onClick={() => this.setState({ showMovie: !this.state.showMoive })}>SHOW MOVIE</Button>
           <Row>
             <Col md={{ span: 6, offset: 3 }}>
               <MovieDetail selectedMovie={this.state.movieTitle} />
@@ -51,4 +63,4 @@ class App extends Component {
 }
 
 
-export default App;
+export default App
